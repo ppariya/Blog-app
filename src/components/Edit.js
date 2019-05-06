@@ -9,7 +9,8 @@ class Edit extends Component {
     this.state = {
       key: '',
       title: '',
-      body: ''
+      body: '',
+      date_added: firebase.firestore.FieldValue.serverTimestamp()
     };
   }
 
@@ -21,7 +22,9 @@ class Edit extends Component {
         this.setState({
           key: doc.id,
           title: blog.title,
-          body: blog.body
+          body: blog.body,
+          
+
         });
       } else {
         console.log("No such Blog!");
@@ -38,12 +41,13 @@ class Edit extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const { title, body } = this.state;
+    const { title, body, date_added } = this.state;
 
     const updateRef = firebase.firestore().collection('blogs').doc(this.state.key);
     updateRef.set({
       title,
-      body
+      body,
+      date_added
     }).then((docRef) => {
       this.setState({
         key: '',
