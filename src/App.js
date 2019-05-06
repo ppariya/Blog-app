@@ -6,7 +6,7 @@ import firebase from './Firebase';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.ref = firebase.firestore().collection('blogs');
+    this.ref = firebase.firestore().collection("blogs").orderBy("date_added", "desc");
     this.unsubscribe = null;
     this.state = {
       blogs: []
@@ -45,7 +45,7 @@ class App extends Component {
           </div>
           <div class="panel-body">
             <h4><Link to="/create">Add Blog</Link></h4>
-            <table class="table table-stripe">
+            {/* <table class="table table-stripe">
               <thead>
                 <tr>
                   <th>Title</th>
@@ -60,7 +60,15 @@ class App extends Component {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </table> */}
+          </div>
+          <div class="card-columns">
+          {this.state.blogs.map(blog =>
+            <div class="card-body card border-success">
+              <h5 class="card-title"><Link to={`/show/${blog.key}`}>{blog.title}</Link></h5>
+              <p class="card-text">{blog.body}</p>
+            </div>
+          )}
           </div>
         </div>
       </div>

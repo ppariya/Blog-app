@@ -11,6 +11,7 @@ class Create extends Component {
     this.state = {
       title: '',
       body: '',
+      date_added: firebase.firestore.FieldValue.serverTimestamp()
     };
   }
   onChange = (e) => {
@@ -22,15 +23,17 @@ class Create extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const { title, body } = this.state;
+    const { title, body, date_added } = this.state;
 
     this.ref.add({
       title,
-      body
+      body,
+      date_added
     }).then((docRef) => {
       this.setState({
         title: '',
-        body: ''
+        body: '',
+        // date_added: ''
       });
       this.props.history.push("/")
     })
@@ -41,6 +44,7 @@ class Create extends Component {
 
   render() {
     const { title, body } = this.state;
+    // var date_added = firebase.firestore.FieldValue.serverTimestamp();
     return (
       <div class="container">
         <div class="panel panel-default">
@@ -61,7 +65,7 @@ class Create extends Component {
                 <textArea class="form-control" name="body" onChange={this.onChange} placeholder="Body" cols="80" rows="3">{body}</textArea>
               </div>
               
-              <button type="submit" class="btn btn-success">Submit</button>
+              <button type="submit" class="btn btn-success" >Submit</button>
             </form>
           </div>
         </div>
